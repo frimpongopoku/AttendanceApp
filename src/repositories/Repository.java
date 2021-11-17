@@ -56,14 +56,18 @@ public class Repository implements RepositoryInterface {
 
     @Override
     public ArrayList<Swipe> getItems(String cardId) {
-                Predicate<Swipe> predicate = itm -> itm.getCardId().equals(cardId);
-//        Predicate<Swipe> predicate = itm -> itm.getCardId().trim().toLowerCase().equals(cardId.toLowerCase());
+        Predicate<Swipe> predicate = itm -> itm.getCardId().equals(cardId);
         return this.items.getItems(predicate);
     }
 
     @Override
     public String toString() {
         return "\nItems: " + this.items.toString();
+    }
+
+    @Override
+    public String reverseToString() {
+        return this.items.reverseToString();
     }
 
     @Override

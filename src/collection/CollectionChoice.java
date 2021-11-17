@@ -34,6 +34,8 @@ public abstract class CollectionChoice<T> {
 
     public abstract String toString();
 
+    public  abstract  String reverseToString();
+
     public abstract String toString(char delimiter);
 
 }

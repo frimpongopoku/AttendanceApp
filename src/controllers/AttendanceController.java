@@ -86,16 +86,14 @@ public class AttendanceController {
         Swipe swipe;
         boolean valid = false;
         do {
-            char choice = inputHelper.readCharacter("A. Visitor \t B. Not A Visitor \tC. Back Main Menu\nEnter Choice");
+            char choice = inputHelper.readCharacter("A. Visitor \t B. Not A Visitor ");
             if (choice == 'A' || choice == 'a') {
                 valid = true;
                 repository.add(collectSwipeInput(true));
             } else if (choice == 'B' || choice == 'b') {
                 valid = true;
                 repository.add(collectSwipeInput(false));
-
-            } else if (choice == 'C' || choice == 'c')
-                valid = true;
+            }
 
         } while (!valid);
 
@@ -123,23 +121,20 @@ public class AttendanceController {
     }
 
     private void listSwipesInReverseDateTimeOrder() {
-        System.out.format("\033[31m%s\033[0m%n", "Date Time In Reverse Order");
-        System.out.format("\033[31m%s\033[0m%n", "Earliest >> Latest");
-        System.out.format("\033[31m%s\033[0m%n", "==========================");
-        Collections.sort(repository.getItems().getItems(), new Comparator<Swipe>() {
-            @Override
-            public int compare(Swipe swipe1, Swipe swipe2) {
-                return Swipe.swipeDateTimeComparator(swipe1, swipe2);
-            }
-        });
-        System.out.println(repository.toString());
+//        Collections.sort(repository.getItems().getItems(), new Comparator<Swipe>() {
+//            @Override
+//            public int compare(Swipe swipe1, Swipe swipe2) {
+//                return Swipe.swipeDateTimeComparator(swipe1, swipe2);
+//            }
+//        });
+        System.out.println(repository.reverseToString());
     }
 
     private void listSwipesWhichMatchCardId() {
         InputHelper helper = new InputHelper();
         String id = helper.readString("Enter card Id");
         ArrayList<Swipe> swipes = repository.getItems(id);
-        System.out.format("\033[31m%s\033[0m%n", "Swipes By " + id);
+        System.out.format("\033[31m%s\033[0m%n", "Swipes By Card ");
         System.out.format("\033[31m%s\033[0m%n", "=================");
         System.out.format("\033[31m%s\033[0m%n", id + " was swiped " + swipes.size() + " time(s)");
     }

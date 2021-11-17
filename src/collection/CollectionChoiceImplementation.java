@@ -1,14 +1,17 @@
 package collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
+
+import model.Swipe;
 
 
 public class CollectionChoiceImplementation<Swipe> extends CollectionChoice<Swipe> {
 
     public CollectionChoiceImplementation() {
         super();
-
     }
 
     @Override
@@ -44,6 +47,18 @@ public class CollectionChoiceImplementation<Swipe> extends CollectionChoice<Swip
         }
         return output;
     }
+
+    @Override
+    public String reverseToString() {
+        String output = "";
+        List<model.Swipe> list = this.getItems();
+        Collections.reverse(list);
+        for (model.Swipe item : list) {
+            output += item.toString();
+        }
+        return output;
+    }
+
 
     @Override
     public String toString(char delimiter) {

@@ -55,6 +55,8 @@ public interface RepositoryInterface {
     @Override
     String toString();
 
+    public String reverseToString();
+
     public String toString(char delimiter);
     
 }
