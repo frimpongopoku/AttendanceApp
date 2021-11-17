@@ -89,8 +89,9 @@ public class VisitorSwipe extends Swipe {
      * @return
      */
     public String toString(char delimiter) {
-        return Integer.toString(this.id) + delimiter + this.cardId +
-                delimiter + this.room + delimiter + formatSwipeDateTime(this.swipeDateTime) + this.visitorCompany + delimiter + this.visitorCompany;
+        final String QUOTE = "\"";
+        return Integer.toString(this.id) + delimiter + QUOTE + this.cardId + QUOTE +
+                delimiter + QUOTE + this.room + QUOTE + delimiter + QUOTE + formatSwipeDateTime(this.swipeDateTime) + QUOTE + delimiter + QUOTE + this.visitorName + QUOTE + this.visitorCompany + QUOTE + EOLN;
     }
 
 }

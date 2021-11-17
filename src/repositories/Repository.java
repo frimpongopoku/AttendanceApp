@@ -1,5 +1,6 @@
 package repositories;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import collection.CollectionChoice;
@@ -10,6 +11,7 @@ import model.Swipe;
 
 public class Repository implements RepositoryInterface {
     private CollectionChoice<Swipe> items;
+
     public Repository() {
         this.items = new CollectionChoiceImplementation<Swipe>();
     }
@@ -48,9 +50,15 @@ public class Repository implements RepositoryInterface {
 
     @Override
     public Swipe getItem(int id) {
-        Predicate<Swipe> predicate = itm -> itm.getId() == id;
-        return this.items.getItem(predicate);
+        return this.items.getItem(id);
 
+    }
+
+    @Override
+    public ArrayList<Swipe> getItems(String cardId) {
+                Predicate<Swipe> predicate = itm -> itm.getCardId().equals(cardId);
+//        Predicate<Swipe> predicate = itm -> itm.getCardId().trim().toLowerCase().equals(cardId.toLowerCase());
+        return this.items.getItems(predicate);
     }
 
     @Override

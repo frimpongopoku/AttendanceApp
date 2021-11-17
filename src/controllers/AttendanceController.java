@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import helpers.InputHelper;
 import model.Swipe;
 import model.VisitorSwipe;
@@ -54,7 +58,7 @@ public class AttendanceController {
         } while (!finished);
 
         InputHelper helper = new InputHelper();
-        if (repository.getItems().items.size() > 0) {
+        if (repository.getItems().getItems().size() > 0) {
             char choice = helper.readCharacter("Would you like to save the available swipes(Y/N) ? ");
             if (choice == 'Y' || choice == 'y') {
                 String filename = helper.readString("Enter any filename your prefer? ");
@@ -107,7 +111,6 @@ public class AttendanceController {
             name = helper.readString("Your name? ");
             company = helper.readString("Your company Name? ");
             swipe = new VisitorSwipe(cardId, room);
-
             swipe.setVisitorCompany(company);
             swipe.setVisitorName(name);
             return swipe;
@@ -119,14 +122,25 @@ public class AttendanceController {
         System.out.println(repository.toString());
     }
 
-
     private void listSwipesInReverseDateTimeOrder() {
-        System.out.format("\033[31m%s\033[0m%n", "Date Time Order");
-        System.out.format("\033[31m%s\033[0m%n", "===============");
+        System.out.format("\033[31m%s\033[0m%n", "Date Time In Reverse Order");
+        System.out.format("\033[31m%s\033[0m%n", "Earliest >> Latest");
+        System.out.format("\033[31m%s\033[0m%n", "==========================");
+        Collections.sort(repository.getItems().getItems(), new Comparator<Swipe>() {
+            @Override
+            public int compare(Swipe swipe1, Swipe swipe2) {
+                return Swipe.swipeDateTimeComparator(swipe1, swipe2);
+            }
+        });
+        System.out.println(repository.toString());
     }
 
     private void listSwipesWhichMatchCardId() {
-        System.out.format("\033[31m%s\033[0m%n", "Swipes By Card Id");
+        InputHelper helper = new InputHelper();
+        String id = helper.readString("Enter card Id");
+        ArrayList<Swipe> swipes = repository.getItems(id);
+        System.out.format("\033[31m%s\033[0m%n", "Swipes By " + id);
         System.out.format("\033[31m%s\033[0m%n", "=================");
+        System.out.format("\033[31m%s\033[0m%n", id + " was swiped " + swipes.size() + " time(s)");
     }
 }

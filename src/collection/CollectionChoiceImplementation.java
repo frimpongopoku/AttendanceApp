@@ -8,17 +8,18 @@ public class CollectionChoiceImplementation<Swipe> extends CollectionChoice<Swip
 
     public CollectionChoiceImplementation() {
         super();
-        this.items = new ArrayList<>();
+
     }
 
     @Override
-    public model.Swipe getItem(Predicate<model.Swipe> predicate) {
+    public ArrayList<model.Swipe> getItems(Predicate<model.Swipe> predicate) {
+        ArrayList<model.Swipe> arr = new ArrayList<>();
         for (model.Swipe item : this.getItems()) {
-            Boolean itMatches = predicate.test(item);
+            boolean itMatches = predicate.test(item);
             if (itMatches)
-                return item;
+                arr.add(item);
         }
-        return null;
+        return arr;
     }
 
     @Override
@@ -29,9 +30,9 @@ public class CollectionChoiceImplementation<Swipe> extends CollectionChoice<Swip
     @Override
     public void removeIf(Predicate<model.Swipe> predicate) {
         for (int index = 0; index < this.getItems().size(); index++) {
-            model.Swipe item = this.items.get(index);
-            Boolean itMatches = predicate.test(item);
-            if (itMatches) this.items.remove(index);
+            model.Swipe item = this.getItems().get(index);
+            boolean itMatches = predicate.test(item);
+            if (itMatches) this.getItems().remove(index);
         }
     }
 

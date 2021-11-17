@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * @author mga
  */
-public class Swipe  {
+public class Swipe {
 
     /**
      *
@@ -161,24 +161,35 @@ public class Swipe  {
     }
 
     /**
-     *
      * @param delimiter
      * @return
      */
     public String toString(char delimiter) {
-        return Integer.toString(this.id) + delimiter + this.cardId +
-                delimiter + this.room + delimiter + formatSwipeDateTime(this.swipeDateTime);
+        final String QUOTE = "\"";
+        return Integer.toString(this.id) + delimiter + QUOTE + this.cardId + QUOTE +
+                delimiter + QUOTE + this.room + QUOTE + delimiter + QUOTE + formatSwipeDateTime(this.swipeDateTime) + QUOTE + EOLN;
     }
 
-//    /**
-//     * Comparing swipe objects lexicographically
-//     * DONT USE LEXICROGRAPHICAL COMPARISON, this is where you should be comparing the dates bruh
-//     *
-//     * @param swipe
-//     * @return
-//     */
+    /**
+     * Compares two swipes an integer
+     * less than 0 if swipe1 was earlier than swipe 2
+     * equal to 0 time of two swipes are the same
+     * more than 0 if swipe 2 was earlier than swipe 1
+     *
+     * @param swipe1
+     * @param swipe2
+     * @return
+     */
+    public static int swipeDateTimeComparator(Swipe swipe1, Swipe swipe2) {
+        return swipe1.compareTo(swipe2);
+    }
+
+    public int compareTo(Swipe swipe) {
+        return this.swipeDateTime.compareTo(swipe.getSwipeDateTime());
+    }
+
 //    @Override
-//    public int compareTo(Swipe swipe) {
-//        return toString().compareTo(swipe.toString());
+//    public int compareTo(Object o) {
+//        return this.swipeDateTime.compareTo(((Swipe) o).getSwipeDateTime());
 //    }
 }

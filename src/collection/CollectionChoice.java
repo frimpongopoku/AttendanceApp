@@ -1,19 +1,20 @@
 package collection;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 import model.Swipe;
 
 public abstract class CollectionChoice<T> {
 
-    public ArrayList<Swipe> items;
+    private List<Swipe> items;
 
     CollectionChoice() {
         this.items = new ArrayList<>();
     }
 
-    public ArrayList<Swipe> getItems() {
+    public List<Swipe> getItems() {
         return this.items;
     }
 
@@ -21,7 +22,7 @@ public abstract class CollectionChoice<T> {
         this.items = items;
     }
 
-    public abstract Swipe getItem(Predicate<Swipe> predicate);
+    public abstract ArrayList<Swipe> getItems(Predicate<Swipe> predicate);
 
     public abstract Swipe getItem(int i);
 

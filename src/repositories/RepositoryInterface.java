@@ -1,5 +1,7 @@
 package repositories;
 
+import java.util.ArrayList;
+
 import collection.CollectionChoice;
 import model.Swipe;
 
@@ -20,6 +22,13 @@ public interface RepositoryInterface {
      * @return
      */
     Swipe getItem(int id);
+
+    /**
+     * Retrieves all swipes that match a particular card id
+     * @param cardId
+     * @return
+     */
+    ArrayList<Swipe> getItems(String cardId);
 
     CollectionChoice<Swipe> getItems();
 
