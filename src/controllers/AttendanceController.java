@@ -121,7 +121,13 @@ public class AttendanceController {
     }
 
     private void listSwipesInReverseDateTimeOrder() {
-        System.out.println(repository.reverseToString());
+        Collections.sort(repository.getItems().getItems(), new Comparator<Swipe>() {
+            @Override
+            public int compare(Swipe swipe, Swipe t1) {
+                return Swipe.swipeDateTimeComparator(t1, swipe);
+            }
+        });
+        System.out.println(repository.toString());
     }
 
     private void listSwipesWhichMatchCardId() {
