@@ -4,13 +4,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
 /**
  * @author mga
  */
-public class Swipe {
+public class Swipe  {
 
     /**
      *
@@ -110,6 +111,7 @@ public class Swipe {
         this.room = room;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -171,11 +173,6 @@ public class Swipe {
     }
 
     /**
-     * Compares two swipes an integer
-     * less than 0 if swipe1 was earlier than swipe 2
-     * equal to 0 time of two swipes are the same
-     * more than 0 if swipe 2 was earlier than swipe 1
-     *
      * @param swipe1
      * @param swipe2
      * @return
@@ -184,12 +181,8 @@ public class Swipe {
         return swipe1.compareTo(swipe2);
     }
 
+
     public int compareTo(Swipe swipe) {
         return this.swipeDateTime.compareTo(swipe.getSwipeDateTime());
     }
-
-//    @Override
-//    public int compareTo(Object o) {
-//        return this.swipeDateTime.compareTo(((Swipe) o).getSwipeDateTime());
-//    }
 }
