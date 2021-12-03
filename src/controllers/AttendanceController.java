@@ -10,7 +10,7 @@ import model.VisitorSwipe;
 import repositories.Repository;
 
 /**
- * @author Frimpong Opoku Agyemang
+ * @author ...
  */
 public class AttendanceController {
     private final Repository repository;
@@ -58,7 +58,7 @@ public class AttendanceController {
         } while (!finished);
 
         InputHelper helper = new InputHelper();
-        if (repository.getItems().getItems().size() > 0) {
+        if (repository.getItems().size() > 0) {
             char choice = helper.readCharacter("Would you like to save the available swipes(Y/N) ? ");
             if (choice == 'Y' || choice == 'y') {
                 String filename = helper.readString("Enter any filename your prefer? ");
@@ -83,45 +83,43 @@ public class AttendanceController {
         System.out.format("\033[31m%s\033[0m%n", "Add Swipe");
         System.out.format("\033[31m%s\033[0m%n", "===============");
         InputHelper inputHelper = new InputHelper();
-        Swipe swipe;
+        String cardId = "";
+        String room = "";
+        String name = "";
+        String company = "";
         boolean valid = false;
         do {
             char choice = inputHelper.readCharacter("A. Visitor \t B. Not A Visitor ");
             if (choice == 'A' || choice == 'a') {
+                VisitorSwipe swipe;
+                cardId = inputHelper.readString("Card Id? ");
+                room = inputHelper.readString("Room Number? ");
+                name = inputHelper.readString("Your name? ");
+                company = inputHelper.readString("Your company Name? ");
+                swipe = new VisitorSwipe(cardId, room);
+                swipe.setVisitorCompany(company);
+                swipe.setVisitorName(name);
+                repository.add(swipe);
                 valid = true;
-                repository.add(collectSwipeInput(true));
             } else if (choice == 'B' || choice == 'b') {
+                Swipe swipe;
+                cardId = inputHelper.readString("Card Id? ");
+                room = inputHelper.readString("Room Number? ");
+                swipe = new Swipe(cardId, room);
+                repository.add(swipe);
                 valid = true;
-                repository.add(collectSwipeInput(false));
             }
-
         } while (!valid);
 
     }
 
-    private Swipe collectSwipeInput(boolean isVisitor) {
-        InputHelper helper = new InputHelper();
-        String cardId, room, name, company = "";
-        cardId = helper.readString("Card Id? ");
-        room = helper.readString("Room Number? ");
-        if (isVisitor) {
-            VisitorSwipe swipe;
-            name = helper.readString("Your name? ");
-            company = helper.readString("Your company Name? ");
-            swipe = new VisitorSwipe(cardId, room);
-            swipe.setVisitorCompany(company);
-            swipe.setVisitorName(name);
-            return swipe;
-        } else
-            return new Swipe(cardId, room);
-    }
 
     private void listSwipes() {
         System.out.println(repository.toString());
     }
 
     private void listSwipesInReverseDateTimeOrder() {
-        Collections.sort(repository.getItems().getItems(), new Comparator<Swipe>() {
+        Collections.sort(repository.getItems(), new Comparator<Swipe>() {
             @Override
             public int compare(Swipe swipe, Swipe t1) {
                 return Swipe.swipeDateTimeComparator(t1, swipe);

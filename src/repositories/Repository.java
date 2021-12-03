@@ -1,22 +1,21 @@
 package repositories;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
-import collection.CollectionChoice;
-import collection.CollectionChoiceImplementation;
 import daos.DAOTextImplementation;
 import model.Swipe;
 
 
 public class Repository implements RepositoryInterface {
-    private CollectionChoice<Swipe> items;
+    private List<Swipe> items;
 
     public Repository() {
-        this.items = new CollectionChoiceImplementation<Swipe>();
+        this.items = new ArrayList<>();
     }
 
-    public Repository(CollectionChoice<Swipe> items) {
+    public Repository(ArrayList<Swipe> items) {
         this.items = items;
     }
 
@@ -26,15 +25,6 @@ public class Repository implements RepositoryInterface {
         this.items = dao.load(filename).getItems();
     }
 
-    @Override
-    public CollectionChoice<Swipe> getItems() {
-        return this.items;
-    }
-
-    @Override
-    public void setItems(CollectionChoice<Swipe> items) {
-        this.items = items;
-    }
 
     @Override
     public void add(Swipe item) {
@@ -44,35 +34,64 @@ public class Repository implements RepositoryInterface {
     @Override
     public void remove(int id) {
         Predicate<Swipe> predicate = itm -> itm.getId() == id;
-        this.items.removeIf(predicate);
+        this.removeIf(predicate);
+    }
+
+    public void removeIf(Predicate<model.Swipe> predicate) {
+        for (int index = 0; index < this.items.size(); index++) {
+            model.Swipe item = this.items.get(index);
+            boolean matched = predicate.test(item);
+            if (matched) {
+                this.items.remove(index);
+            }
+        }
+    }
+
+
+    @Override
+    public void setItems(ArrayList items) {
+        this.items = items;
     }
 
 
     @Override
     public Swipe getItem(int id) {
-        return this.items.getItem(id);
-
+       return items.get(id);
     }
 
     @Override
     public ArrayList<Swipe> getItems(String cardId) {
-        Predicate<Swipe> predicate = itm -> itm.getCardId().equals(cardId);
-        return this.items.getItems(predicate);
+        ArrayList<Swipe> foundSwipes = new ArrayList<>();
+        for( Swipe s: items) {
+            if(s.getCardId().equals(cardId)) {
+                foundSwipes.add(s);
+            }
+        }
+        return foundSwipes;
+    }
+
+    @Override
+    public List<Swipe> getItems() {
+        return this.items;
     }
 
     @Override
     public String toString() {
-        return "\nItems: " + this.items.toString();
+        String output = "";
+        for (model.Swipe item : this.getItems()) {
+            output += item.toString();
+        }
+        return output;
     }
 
-    @Override
-    public String reverseToString() {
-        return this.items.reverseToString();
-    }
 
     @Override
     public String toString(char delimiter) {
-        return this.items.toString(delimiter);
+        String output = "";
+        for (model.Swipe s : this.getItems()) {
+            output += s.toString(delimiter);
+        }
+        return output;
     }
 
     @Override

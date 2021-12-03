@@ -1,8 +1,9 @@
 package repositories;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import collection.CollectionChoice;
+
 import model.Swipe;
 
 /**
@@ -28,9 +29,9 @@ public interface RepositoryInterface {
      * @param cardId
      * @return
      */
-    ArrayList<Swipe> getItems(String cardId);
+    List<Swipe> getItems(String cardId);
 
-    CollectionChoice<Swipe> getItems();
+   List<Swipe> getItems();
 
     /**
      *
@@ -39,7 +40,7 @@ public interface RepositoryInterface {
     
     void remove(int id);
 
-    void setItems(CollectionChoice<Swipe> items);
+    void setItems(ArrayList items);
 
     /**
      *
@@ -54,8 +55,6 @@ public interface RepositoryInterface {
      */
     @Override
     String toString();
-
-    public String reverseToString();
 
     public String toString(char delimiter);
     
