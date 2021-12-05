@@ -115,6 +115,12 @@ public class AttendanceController {
 
 
     private void listSwipes() {
+        Collections.sort(repository.getItems(), new Comparator<Swipe>() {
+            @Override
+            public int compare(Swipe swipe, Swipe t1) {
+                return swipe.getId() - t1.getId();
+            }
+        });
         System.out.println(repository.toString());
     }
 
